@@ -3,7 +3,7 @@ import { galleryItems } from './gallery-items.js';
 
 const instance = basicLightbox.create(`<img src="" width="1280">`, {
   onShow: onShowLightbox,
-  onClose: removeLightboxEscapeListener,
+  onClose: onCloseLightbox,
 });
 
 const galleryRef = document.querySelector('.gallery');
@@ -13,14 +13,14 @@ galleryRef.addEventListener('click', handleShowLightbox);
 function renderGallery(ref, items) {
   const markUp = items
     .map(
-      ({ preview, original, desription }) => `
+      ({ preview, original, description }) => `
 		<li class="gallery__item">
 			<a class="gallery__link" href="${original}">
 				<img
 					class="gallery__image"
 					src="${preview}"
 					data-source="${original}"
-					alt="${desription}"
+					alt="${description}"
 				/>
 			</a>
 		</li>
@@ -42,17 +42,17 @@ function handleShowLightbox(event) {
 }
 
 function onShowLightbox() {
-  window.addEventListener('keyup', onCloseLightbox);
+  window.addEventListener('keyup', handleCloseLightbox);
 }
 
-function onCloseLightbox(event) {
+function handleCloseLightbox(event) {
   if (instance.visible() && event.key === 'Escape') {
     instance.close();
   }
 }
 
-function removeLightboxEscapeListener() {
-  window.removeEventListener('keyup', onCloseLightbox);
+function onCloseLightbox() {
+  window.removeEventListener('keyup', handleCloseLightbox);
 }
 
 renderGallery(galleryRef, galleryItems);
