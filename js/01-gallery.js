@@ -6,8 +6,6 @@ const instance = basicLightbox.create(`<img src="" width="1280">`, {
   onClose: removeLightboxEscapeListener,
 });
 
-console.log(instance.element());
-
 const galleryRef = document.querySelector('.gallery');
 
 galleryRef.addEventListener('click', handleShowLightbox);
